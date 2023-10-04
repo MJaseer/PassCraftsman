@@ -1,0 +1,96 @@
+<div class="font-sans">
+  <div class="relative min-h-screen flex flex-col sm:justify-center items-center bg-gray-500 ">
+    <div class="relative sm:max-w-sm w-full">
+      <div class="card bg-blue-400 shadow-lg  w-full h-full rounded-3xl absolute  transform -rotate-6"></div>
+      <div class="card bg-red-400 shadow-lg  w-full h-full rounded-3xl absolute  transform rotate-6"></div>
+      <div class="relative w-full rounded-3xl  px-6 py-4 bg-gray-100 shadow-md">
+        <label for="" class="block text-sm text-gray-700 text-center font-semibold">
+          Register
+        </label>
+        <form class="mt-10" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+          <div>
+            <input type="email" placeholder="Email" autocomplete="email" required formControlName="email"
+              class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
+            <span class="text-red-600 font-bold" *ngIf="registerForm.get('email')?.invalid &&
+              (registerForm.get('email')?.dirty || registerForm.get('email')?.touched ||
+               isSubmitted)">E-mail is required</span>
+          </div>
+
+          <div class="mt-7">
+            <input type="text" placeholder="Full Name" autocomplete="name" required maxlength="15"
+              formControlName="userName" required
+              class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
+              <span class="text-red-600 font-bold" *ngIf="registerForm.get('email')?.invalid &&
+              (registerForm.get('name')?.dirty || registerForm.get('name')?.touched ||
+               isSubmitted)">Name is required</span>
+          </div>
+
+          <div class="mt-7">
+            <input type="password" placeholder="Password" autocomplete="new-password" required minlength="8"
+              maxlength="15" formControlName="password" required minlength="8" maxlength="15"
+              class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
+            <span class="text-red-600 font-bold" *ngIf="registerForm.get('password')?.invalid &&
+              (registerForm.get('password')?.dirty || registerForm.get('password')?.touched ||
+               isSubmitted)">
+              <span class="text-red-600 font-bold" *ngIf="registerForm.get('password')?.invalid &&
+              (registerForm.get('password')?.dirty || registerForm.get('password')?.touched ||
+               isSubmitted)"> Password is required</span>
+              <span
+                *ngIf="registerForm.get('password')?.errors?.['minlength'] || registerForm.get('password')?.errors?.['maxlength']">
+                Password length must be more tha 8 characcters and less than 15 character</span>
+               
+            </span>
+            <span class="text-red-600 font-bold ">
+              {{passWordErr}}
+            </span>
+          </div>
+
+          <!-- <div class="mt-7">
+            <input type="password" name="cpassword"   placeholder="Confirm Password" autocomplete="current-password" required 
+              class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0"> -->
+              <!-- <span class="text-red-600" *ngIf="cpassword.invalid &&(cpassword.dirty || cpassword.touched ||isSubmitted)">
+                <span class="text-red-600" *ngIf="cpassword.errors?.['value'] != registerForm.get('password')?.value"> Both Password
+                  must be same</span>
+                
+                <span class="text-red-600" *ngIf="cpassword.errors?.['required']">Confirm Password is required </span>
+            </span> -->
+              <!-- <span class="text-red-600 font-bold" *ngIf="registerForm.get('password')?.value  != confirmPass ">Passwords
+              must be same</span>
+          </div> -->
+
+          <div class="mt-7 flex">
+            <label class="flex justify-start items-start">
+
+            </label>
+
+            <div class="w-full text-right">
+              <a class="underline text-sm text-gray-600 hover:text-gray-900">
+                Forgot Password?
+                <p>{{confirmPass}}</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="mt-7">
+            <button
+              class="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+              Register
+            </button>
+          </div>
+
+
+          <div class="mt-7">
+            <div class="flex justify-center items-center">
+              <label class="text-sm text-gray-600">Already have an Account?</label>
+              <a routerLink="/login"
+                class=" ml-2 text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                Login
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

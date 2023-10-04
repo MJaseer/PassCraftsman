@@ -1,0 +1,76 @@
+<img src="../../../assets/header-img.svg" alt="" data-anim="animate">
+
+
+<div>
+    <span class="text-black text-2xl ">{{password}}</span>
+    <button (click)="generate()" nz-button nzType="primary">Generate</button>
+    <button *ngIf="password!= 'Generate Password' " (click)="handleCopyClick()" nz-button nzType="primary">Copy</button>
+</div>
+
+<div>
+    <div>
+        <span>Upper class</span>
+        <span (click)="changeItem('upper')" nz-icon [nzType]="upperInclude.shape" [nzTheme]="'twotone'"
+            [nzTwotoneColor]=" upperInclude.color "></span>
+    </div>
+    <div>
+        <span>Lower</span>
+        <span (click)="changeItem('lower')" nz-icon [nzType]="lowerInclude.shape" [nzTheme]="'twotone'"
+            [nzTwotoneColor]=" lowerInclude.color "></span>
+    </div>
+    <div>
+        <span>
+            Special character
+        </span>
+        <span (click)="changeItem('special')" nz-icon [nzType]="speialCharInclude.shape" [nzTheme]="'twotone'"
+            [nzTwotoneColor]=" speialCharInclude.color "></span>
+    </div>
+    <div>
+        <span>number</span>
+        <span (click)="changeItem('number')" nz-icon [nzType]="numberInclude.shape" [nzTheme]="'twotone'"
+            [nzTwotoneColor]=" numberInclude.color "></span>
+    </div>
+    <div class="w-1/4">
+        <nz-slider [nzMin]="1" [nzMax]="20" [(ngModel)]="passwordLength"></nz-slider>
+    </div>
+</div>
+<div class="mx-auto">
+    <form class="flex flex-col w-1/4 gap-3" [formGroup]="passToSave" (ngSubmit)="savePassword()">
+
+        <div>
+            <input type="text" formControlName="appName" placeholder="App name" required autocomplete="name"
+                minlength="2"
+                class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
+            <span class="text-red-600 font-bold" *ngIf="passToSave.get('appName')?.invalid &&
+                (passToSave.get('appName')?.dirty || passToSave.get('appName')?.touched ||
+                 isSubmitted)">
+                <span class="text-red-600 font-bold" *ngIf="passToSave.get('appName')?.invalid &&
+                (passToSave.get('appName')?.dirty || passToSave.get('appName')?.touched ||
+                 isSubmitted)"> Password is required</span>
+                <span
+                    *ngIf="passToSave.get('appName')?.errors?.['minlength'] || passToSave.get('appName')?.errors?.['maxlength']">
+                    Password length must be more tha 2 characcters and less than 15 character</span>
+            </span>
+        </div>
+        <div>
+            <input type="text" formControlName="userName" placeholder="User name" required autocomplete="name"
+                minlength="2"
+                class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
+            <span class="text-red-600 font-bold" *ngIf="passToSave.get('userName')?.invalid &&
+                (passToSave.get('userName')?.dirty || passToSave.get('userName')?.touched ||
+                 isSubmitted)">
+                <span class="text-red-600 font-bold" *ngIf="passToSave.get('userName')?.invalid &&
+                (passToSave.get('userName')?.dirty || passToSave.get('userName')?.touched ||
+                 isSubmitted)"> Password is required</span>
+                <span
+                    *ngIf="passToSave.get('userName')?.errors?.['minlength'] || passToSave.get('userName')?.errors?.['maxlength']">
+                    Password length must be more tha 2 characcters and less than 15 character</span>
+            </span>
+        </div>
+        <span class="focus:outline-none p-3 pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0" >{{password}} </span>
+        <button
+        class="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+        Save
+      </button>
+    </form>
+</div>
