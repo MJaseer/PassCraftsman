@@ -27,4 +27,8 @@ export class HttpService {
     return this.http.get<passWord[]>(`${url}/fetch-saved-data`, { withCredentials: true })
   }
 
+  deletePassWord(password:passWord){
+    return this.http.delete<passWord[]>(`${url}/delete-saved-data`, { withCredentials: true })
+  }
+
 }

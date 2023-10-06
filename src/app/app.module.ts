@@ -17,7 +17,11 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSliderModule } from "ng-zorro-antd/slider";
+import { NzTableModule } from "ng-zorro-antd/table";
 import { InterceptInterceptor } from './services/intercept.interceptor';
+import { NzDividerModule } from "ng-zorro-antd/divider";
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 registerLocaleData(en);
 
 @NgModule({
@@ -25,7 +29,8 @@ registerLocaleData(en);
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,10 @@ registerLocaleData(en);
     NzButtonModule,
     NzIconModule,
     NzSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzTableModule,
+    NzDividerModule,
+    NzToolTipModule
   ],
   providers: [
     {

@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
 
   isSubmitted = false
   passWordErr = ''
+  savePassWord: passWord[] = []
 
   isUpperCase = true
   isLowerCase = true
@@ -140,15 +141,13 @@ export class HomeComponent implements OnInit {
 
   savePassword() {
     this.passToSave.value.password = this.password
-    console.log(this.passToSave.value);
     if (this.passToSave.valid) {
       this.http.savePassWord(this.passToSave.value as passWord).subscribe(
         result => {
+          this.savePassWord.push(result)
           this.helper.passWordArray.push(result)
-          console.log(result);
         }, ((err) => {
           this.passWordErr = err.error.error
-          console.log(err);
         })
       )
       this.isSubmitted = true
@@ -161,10 +160,35 @@ export class HomeComponent implements OnInit {
 
   }
 
-  getPasswords(){
+  getPasswords() {
     this.http.fetchPassWord().subscribe(
       result => {
-        console.log(result);
+        this.savePassWord = result
+      }
+    )
+  }
+
+  sliderChange() {
+    this.generate()
+  }
+
+  handleSavedCopyClick = (password: string) => {
+    const data = this.savePassWord.find(item => item.password == password)
+    if (data) {
+      navigator.clipboard.writeText(data?.password);
+      this.messageService.success('Copied succesfully', { nzDuration: 3000, nzAnimate: true });
+    }
+  }
+
+  deleteItem(item:passWord){
+    this.http.deletePassWord(item).subscribe(
+      result => {
+        if(result){
+          this.savePassWord = result
+          this.messageService.success('Deleted succesfully', { nzDuration: 3000, nzAnimate: true });
+        } else {
+          this.messageService.error('Delete Failed', { nzDuration: 3000, nzAnimate: true });
+        }
       }
     )
   }

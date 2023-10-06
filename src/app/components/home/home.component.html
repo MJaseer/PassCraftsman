@@ -1,76 +1,181 @@
-<img src="../../../assets/header-img.svg" alt="" data-anim="animate">
-
-
-<div>
-    <span class="text-black text-2xl ">{{password}}</span>
-    <button (click)="generate()" nz-button nzType="primary">Generate</button>
-    <button *ngIf="password!= 'Generate Password' " (click)="handleCopyClick()" nz-button nzType="primary">Copy</button>
-</div>
-
-<div>
-    <div>
-        <span>Upper class</span>
-        <span (click)="changeItem('upper')" nz-icon [nzType]="upperInclude.shape" [nzTheme]="'twotone'"
-            [nzTwotoneColor]=" upperInclude.color "></span>
-    </div>
-    <div>
-        <span>Lower</span>
-        <span (click)="changeItem('lower')" nz-icon [nzType]="lowerInclude.shape" [nzTheme]="'twotone'"
-            [nzTwotoneColor]=" lowerInclude.color "></span>
-    </div>
-    <div>
-        <span>
-            Special character
-        </span>
-        <span (click)="changeItem('special')" nz-icon [nzType]="speialCharInclude.shape" [nzTheme]="'twotone'"
-            [nzTwotoneColor]=" speialCharInclude.color "></span>
-    </div>
-    <div>
-        <span>number</span>
-        <span (click)="changeItem('number')" nz-icon [nzType]="numberInclude.shape" [nzTheme]="'twotone'"
-            [nzTwotoneColor]=" numberInclude.color "></span>
-    </div>
-    <div class="w-1/4">
-        <nz-slider [nzMin]="1" [nzMax]="20" [(ngModel)]="passwordLength"></nz-slider>
-    </div>
-</div>
-<div class="mx-auto">
-    <form class="flex flex-col w-1/4 gap-3" [formGroup]="passToSave" (ngSubmit)="savePassword()">
-
-        <div>
-            <input type="text" formControlName="appName" placeholder="App name" required autocomplete="name"
-                minlength="2"
-                class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
-            <span class="text-red-600 font-bold" *ngIf="passToSave.get('appName')?.invalid &&
-                (passToSave.get('appName')?.dirty || passToSave.get('appName')?.touched ||
-                 isSubmitted)">
-                <span class="text-red-600 font-bold" *ngIf="passToSave.get('appName')?.invalid &&
-                (passToSave.get('appName')?.dirty || passToSave.get('appName')?.touched ||
-                 isSubmitted)"> Password is required</span>
+<div class="pwd-gen-bg h-full w-full md:px-36 flex flex-wrap items-center justify-between ">
+    <div class=" w-full flex justify-between items-center ">
+        <div class="w-full mx-auto flex flex-col justify-center items-center  ">
+            <div class="w-1/2 flex">
                 <span
-                    *ngIf="passToSave.get('appName')?.errors?.['minlength'] || passToSave.get('appName')?.errors?.['maxlength']">
-                    Password length must be more tha 2 characcters and less than 15 character</span>
-            </span>
+                    class=" flex justify-between items-center focus:outline-none p-3 pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
+                    <span class=" w-full text-md ">{{password}}</span>
+                    <div class=" flex flex-row items-center gap-3">
+                        <span nz-tooltip nzTooltipTitle="Regenerate Password">
+                            <span nz-icon nzType="retweet" nzTheme="fill" nz-button (click)="generate()"
+                                class="text-2xl text-black " nzTheme="outline"></span>
+                        </span>
+                        <span nz-tooltip nzTooltipTitle="Copy Password">
+                            <span *ngIf="password!= 'Generate Password' " nzTheme="fill" class="text-2xl text-black"
+                                (click)="handleCopyClick()" nz-button nz-icon nzType="copy" nzTheme="outline"></span>
+                        </span>
+                    </div>
+                </span>
+            </div>
+            <div class="w-1/2">
+                <div
+                    class="px-2.5 mt-1 h-fit py-2 text-lg font-medium flex flex-row mx-auto text-center rounded-xl hover:shadow-inner hover:shadow-xl items-center justify-between gap-1  ">
+                    <span>Capital Letters</span>
+                    <span nz-tooltip nzTooltipTitle="Remove Capital letters">
+                        <span (click)="changeItem('upper')" nz-icon [nzType]="upperInclude.shape" [nzTheme]="'twotone'"
+                            [nzTwotoneColor]=" upperInclude.color "></span>
+                    </span>
+                </div>
+                <div
+                    class="px-2.5 mt-1 h-fit py-2 text-lg font-medium flex flex-row mx-auto text-center rounded-xl hover:shadow-inner hover:shadow-xl items-center justify-between gap-1  ">
+                    <span class="  ">Small Letters</span>
+                    <span nz-tooltip nzTooltipTitle="Remove Small letters">
+                        <span (click)="changeItem('lower')" nz-icon class=" " [nzType]="lowerInclude.shape"
+                            [nzTheme]="'twotone'" [nzTwotoneColor]=" lowerInclude.color "></span>
+                    </span>
+                </div>
+                <div
+                    class="px-2.5 mt-1 h-fit py-2 text-lg font-medium flex flex-row mx-auto text-center rounded-xl hover:shadow-inner hover:shadow-xl items-center justify-between gap-1  ">
+                    <span>
+                        Special Characters
+                    </span>
+                    <span nz-tooltip nzTooltipTitle="Remove Special Characters">
+                        <span (click)="changeItem('special')" nz-icon [nzType]="speialCharInclude.shape"
+                            [nzTheme]="'twotone'" [nzTwotoneColor]=" speialCharInclude.color "></span>
+                    </span>
+                </div>
+                <div
+                    class="px-2.5 mt-1 h-fit py-2 text-lg font-medium flex flex-row mx-auto text-center rounded-xl hover:shadow-inner hover:shadow-xl items-center justify-between gap-1  ">
+                    <span>Numbers</span>
+                    <span nz-tooltip nzTooltipTitle="Remove Numbers">
+                        <span (click)="changeItem('number')" nz-icon [nzType]="numberInclude.shape"
+                            [nzTheme]="'twotone'" [nzTwotoneColor]=" numberInclude.color "></span>
+                    </span>
+                </div>
+                <div class="">
+                    <span nz-tooltip nzTooltipTitle="Change Length ">
+                        <nz-slider class=" " (ngModelChange)="sliderChange()" [nzMin]="1" [nzMax]="20"
+                            [(ngModel)]="passwordLength"></nz-slider>
+                    </span>
+                </div>
+            </div>
+            <div class=" w-1/2 mx-auto">
+                <form class="flex flex-col gap-3" [formGroup]="passToSave" (ngSubmit)="savePassword()">
+
+                    <div>
+                        <input type="text" formControlName="appName" placeholder="App name" required autocomplete="name"
+                            minlength="2"
+                            class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
+                        <span class="text-red-600 font-bold" *ngIf="passToSave.get('appName')?.invalid &&
+                        (passToSave.get('appName')?.dirty || passToSave.get('appName')?.touched ||
+                         isSubmitted)">
+                            <span class="text-red-600 font-bold" *ngIf="passToSave.get('appName')?.invalid &&
+                        (passToSave.get('appName')?.dirty || passToSave.get('appName')?.touched ||
+                         isSubmitted)"> Password is required</span>
+                            <span
+                                *ngIf="passToSave.get('appName')?.errors?.['minlength'] || passToSave.get('appName')?.errors?.['maxlength']">
+                                Password length must be more tha 2 characcters and less than 15 character</span>
+                        </span>
+                    </div>
+                    <div>
+                        <input type="text" formControlName="userName" placeholder="User name" required
+                            autocomplete="name" minlength="2"
+                            class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
+                        <span class="text-red-600 font-bold" *ngIf="passToSave.get('userName')?.invalid &&
+                        (passToSave.get('userName')?.dirty || passToSave.get('userName')?.touched ||
+                         isSubmitted)">
+                            <span class="text-red-600 font-bold" *ngIf="passToSave.get('userName')?.invalid &&
+                        (passToSave.get('userName')?.dirty || passToSave.get('userName')?.touched ||
+                         isSubmitted)"> Password is required</span>
+                            <span
+                                *ngIf="passToSave.get('userName')?.errors?.['minlength'] || passToSave.get('userName')?.errors?.['maxlength']">
+                                Password length must be more tha 2 characcters and less than 15 character</span>
+                        </span>
+                    </div>
+                    <span
+                        class="focus:outline-none p-3 pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">{{password}}
+                    </span>
+                    <button
+                        class="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                        Save
+                    </button>
+                </form>
+            </div>
         </div>
-        <div>
-            <input type="text" formControlName="userName" placeholder="User name" required autocomplete="name"
-                minlength="2"
-                class="focus:outline-none pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0">
-            <span class="text-red-600 font-bold" *ngIf="passToSave.get('userName')?.invalid &&
-                (passToSave.get('userName')?.dirty || passToSave.get('userName')?.touched ||
-                 isSubmitted)">
-                <span class="text-red-600 font-bold" *ngIf="passToSave.get('userName')?.invalid &&
-                (passToSave.get('userName')?.dirty || passToSave.get('userName')?.touched ||
-                 isSubmitted)"> Password is required</span>
-                <span
-                    *ngIf="passToSave.get('userName')?.errors?.['minlength'] || passToSave.get('userName')?.errors?.['maxlength']">
-                    Password length must be more tha 2 characcters and less than 15 character</span>
-            </span>
-        </div>
-        <span class="focus:outline-none p-3 pl-2.5 mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-gray-200 focus:bg-gray-100 focus:ring-0" >{{password}} </span>
-        <button
-        class="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-        Save
-      </button>
-    </form>
+        <img src="../../../assets/header-img.svg" alt="" data-anim="animate">
+    </div>
 </div>
+<div class="h-fit w-full h-fit p-10 flex flex-wrap items-center justify-center bg-inherit">
+
+
+    <!-- <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <nz-table #basicTable [nzData]="savePassWord" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Name</th>
+                    <th scope="col" class="px-6 py-3">Age</th>
+                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Address</th>
+                    <th scope="col" class="px-6 py-3">Copy</th>
+                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of savePassWord" class="border-b border-gray-200 dark:border-gray-700">
+                    <td scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                        {{ data.appName }}</td>
+                    <td class="px-6 py-4">{{ data.userName }}</td>
+                    <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">{{ data.password }}</td>
+                    <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                        <span nz-tooltip nzTooltipTitle="Copy Password">
+                            <span nzTheme="fill" class="text-2xl text-black"
+                                (click)="handleSavedCopyClick(data.password)" nz-button nz-icon nzType="copy"
+                                nzTheme="outline"></span>
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span nz-icon nzTheme="outline" class="text-2xl text-black" nzType="delete"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div> -->
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Name</th>
+                    <th scope="col" class="px-6 py-3">Age</th>
+                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Address</th>
+                    <th scope="col" class="px-6 py-3">Copy</th>
+                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b border-gray-200 dark:border-gray-700" *ngFor="let data of savePassWord">
+                    <th scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                        {{data.appName}}
+                    </th>
+                    <td class="px-6 py-4">{{ data.userName }}</td>
+                    <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">{{ data.password }}</td>
+                    <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                        <span nz-tooltip nzTooltipTitle="Copy Password">
+                            <span nzTheme="fill" class="text-2xl text-black"
+                                (click)="handleSavedCopyClick(data.password)" nz-button nz-icon nzType="copy"
+                                nzTheme="outline"></span>
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span  nz-button nz-icon nzTheme="outline" class="text-2xl text-black" (click)="deleteItem(data)" nzType="delete"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 
+PassCrafter-X: Crafting Super Strong Passwords Just For You
+Generate strong and secure passwords to protect your online accounts. Customize your password criteria and ensure your data's safety. -->
