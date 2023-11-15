@@ -30,7 +30,7 @@ registerLocaleData(en);
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    NavBarComponent
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +45,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     NzTableModule,
     NzDividerModule,
-    NzToolTipModule
+    NzToolTipModule,
   ],
   providers: [
     {

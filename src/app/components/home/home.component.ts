@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subject, takeUntil } from 'rxjs';
 import { passWord } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
+import Swal from 'sweetalert2';
 
 interface status {
   shape: string,
@@ -16,7 +18,7 @@ interface status {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,OnDestroy {
 
   constructor(private messageService: NzMessageService,
     private formBuilder: FormBuilder,
@@ -25,15 +27,21 @@ export class HomeComponent implements OnInit {
 
   password = "Generate Password"
 
+  trackByFn( index: number, user: passWord) { return  user.appName }
+
   passToSave = this.formBuilder.group({
     appName: ['', [Validators.required, Validators.minLength(2)]],
     password: [this.password, Validators.required],
     userName: ['', [Validators.required, Validators.minLength(3)]]
   })
 
+  isLoggedIn = this.helper.isLoggedIn()
+
   isSubmitted = false
   passWordErr = ''
   savePassWord: passWord[] = []
+
+  private unsubscribeSubject!: Subject<void>; 
 
   isUpperCase = true
   isLowerCase = true
@@ -58,7 +66,11 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getPasswords()
+
+    if (this.helper.isLoggedIn()) {
+      this.getPasswords()
+    }
+
   }
 
   changeItem(item: string) {
@@ -140,6 +152,9 @@ export class HomeComponent implements OnInit {
   }
 
   savePassword() {
+    if (!this.helper.isLoggedIn()) {
+      Swal.fire('User Not Found', 'Please login to save user', 'error')
+    }
     this.passToSave.value.password = this.password
     if (this.passToSave.valid) {
       this.http.savePassWord(this.passToSave.value as passWord).subscribe(
@@ -161,11 +176,15 @@ export class HomeComponent implements OnInit {
   }
 
   getPasswords() {
-    this.http.fetchPassWord().subscribe(
-      result => {
-        this.savePassWord = result
-      }
-    )
+    this.unsubscribeSubject = new Subject();
+    
+    this.http.fetchPassWord().pipe(
+      takeUntil(this.unsubscribeSubject)
+    ) .subscribe(
+        result => {
+          this.savePassWord = result
+        }
+      )
   }
 
   sliderChange() {
@@ -180,10 +199,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  deleteItem(item:passWord){
+  deleteItem(item: passWord) {
     this.http.deletePassWord(item).subscribe(
       result => {
-        if(result){
+        if (result) {
           this.savePassWord = result
           this.messageService.success('Deleted succesfully', { nzDuration: 3000, nzAnimate: true });
         } else {
@@ -191,6 +210,11 @@ export class HomeComponent implements OnInit {
         }
       }
     )
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeSubject.next();
+    this.unsubscribeSubject.complete();
   }
 
 }

@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class NavBarComponent {
 
+  item:string = 'navbar  from navbar'
+
 }

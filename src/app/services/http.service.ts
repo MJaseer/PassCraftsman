@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginUser, SignupUser, loginRes, passWord } from '../interfaces/user';
 
-const url = 'http://localhost:5000/api'
+const url = 'https://passwordcraftsman.onrender.com/api'
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-<div class="pwd-gen-bg h-full w-full md:px-36 flex flex-wrap items-center justify-between ">
+<div class="pwd-gen-bg  h-full w-full md:px-36 flex flex-wrap items-center justify-between ">
     <div class=" w-full flex justify-between items-center ">
         <div class="w-full mx-auto flex flex-col justify-center items-center  ">
             <div class="w-1/2 flex">
@@ -59,7 +59,7 @@
                     </span>
                 </div>
             </div>
-            <div class=" w-1/2 mx-auto">
+            <div *ngIf="isLoggedIn" class=" w-1/2 mx-auto">
                 <form class="flex flex-col gap-3" [formGroup]="passToSave" (ngSubmit)="savePassword()">
 
                     <div>
@@ -141,7 +141,7 @@
         </nz-table>
     </div> -->
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div *ngIf="isLoggedIn" class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
                 <tr>
@@ -153,7 +153,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-b border-gray-200 dark:border-gray-700" *ngFor="let data of savePassWord">
+                <tr class="border-b border-gray-200 dark:border-gray-700" *ngFor="let data of savePassWord ;trackBy: trackByFn ">
                     <th scope="row"
                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                         {{data.appName}}
